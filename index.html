@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calm & Code – Your Digital Sanctuary</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="landing">
+
+  <!-- Hero Section -->
+  <div class="overlay">
+    <div class="hero">
+      <h1 class="site-title">Calm & Code</h1>
+      <p class="hero-tagline">Breathe In. Breathe Out<br>Your digital sanctuary for calm and clarity</p>
+
+      <!-- Tiles -->
+      <div class="nav-tiles">
+        <a href="chat.html">Chat</a>
+        <a href="music-app/index.html">Music</a>
+        <a href="#guidance">Guidance</a>
+        <a href="mood-dashboard/index.html">Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT POPUP -->
+  <div id="chat-popup">
+    <div id="chat-header">
+      <span>Puff</span>
+      <button id="closeChatPopup">×</button>
+    </div>
+    <div class="chat-container">
+      <div id="chatlog" class="chatlog">
+        <p class="bot"><strong>Puff:</strong> Hey, how are you feeling today?</p>
+      </div>
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button id="sendBtn">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="assets/bgmusic.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Scroll-triggered Sections -->
+  <section id="music" class="section fade-in">
+    <h2>Relax with Music</h2>
+    <p>Choose calming tracks to focus and reset.</p>
+    <a href="#" class="cta">Browse Tracks</a>
+  </section>
+
+  <section id="guidance" class="section fade-in">
+    <h2>Guidance & Self-Care</h2>
+    <p>Ground yourself with helpful exercises.</p>
+    <a href="#" class="cta">Explore Tips</a>
+  </section>
+
+  <!-- Music autoplay fallback -->
+  <script>
+    const bgMusic = document.getElementById("bg-music");
+    bgMusic.volume = 0.3;
+
+    function tryToPlayMusic() {
+      bgMusic.play().catch(() => {});
+    }
+
+    window.addEventListener("click", tryToPlayMusic, { once: true });
+    window.addEventListener("keydown", tryToPlayMusic, { once: true });
+    window.addEventListener("touchstart", tryToPlayMusic, { once: true });
+  </script>
+
+  <!-- Fade-In Scroll Script -->
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+
+  <!-- Contact Us Section -->   
+  <section class="contact-section scroll-in" id="contact">
+    <div class="contact-wrapper">
+      <h2>Contact Us</h2>
+      <p>Have questions or feedback? We'd love to hear from you!</p>
+      <form class="contact-form">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+  
+  
+
+
+
+  <!-- Chat Logic -->
+  <script src="scripts/chatbot.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.scroll-in');
+  
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+  
+      elements.forEach(el => observer.observe(el));
+    });
+  </script>
+  
+</body>
+</html>
